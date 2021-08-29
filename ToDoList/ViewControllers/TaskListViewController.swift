@@ -10,20 +10,7 @@ import RealmSwift
 class TaskListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     
-    // table view data source
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        20
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell" , for: indexPath)
-        
-        
-        
-        return cell
-    }
+  
     
 
     
@@ -46,16 +33,74 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        taskLists = StorageManager.shared.realm.objects(TaskList.self)// идем в датасоурсе
+        taskLists = StorageManager.shared.realm.objects(TaskList.self)// идем в дата соурсе
+        
+        
+    }
+    
+    
+    // table view data source
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        taskLists.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell" , for: indexPath)
+        
+        let taskList = taskLists[indexPath.row]// извлекаем элемент по текущей строки, объект нашей модели
+        
+        var content = cell.defaultContentConfiguration()
+        content.text = taskList.name
+        
+        // отоброжаем количество задач из realm
+        content.secondaryText = "\(taskList.tasks.count)"
+        
+        // передаем контент
+        cell.contentConfiguration = content
         
         
         
+        return cell
+    }
         
-    //    tableView.delegate = self
-    //    tableView.dataSource = self
+    // переход на второй экран
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let indexPath = tableView.indexPathForSelectedRow else { return }
+        let taskList = taskLists[indexPath.row]
+        let tasksVC = segue.destination as! TasksViewController
+        tasksVC.taskList = taskList
+    }
+    
+    
+}
+//    extension TaskListViewController {
+   //     private func showAlert() {
+   //         let alert = AlertController(title: "New List", message: "Please insert new value", preferredStyle: .alert)
+            
+    //        alert.actionWIthTaskList { newValue in
+                
+     //           }
+            
+   //         else
+  //      }
         
         
         
+//    }
+    
+
+
+
+
+
+//    tableView.delegate = self
+//    tableView.dataSource = self
+    
+    
+    
 //        // список
 //        let shoppingList = TaskList()
 //        shoppingList.name = "Shopping List"
@@ -96,28 +141,25 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
 //
 //
 //    }
-        
-     
-        
-        
-        
-        
-        
-        
-
-
- ///   @IBAction func addButtonPressed(_ sender: Any) {
-   //     showAlert()
-  //  }
     
-    
-  //  @IBAction func sortingList(_ sender: UISegmentedControl) {
  
+    
+    
+    
+    
+    
+    
+
+
+///   @IBAction func addButtonPressed(_ sender: Any) {
+//     showAlert()
+//  }
+
+
+//  @IBAction func sortingList(_ sender: UISegmentedControl) {
+
 //}
     
-   
-
     
-}
 
-}
+
