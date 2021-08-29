@@ -12,7 +12,7 @@ class StorageManager {
     static let shared = StorageManager()
     
     //точка входа в базу
-    private let realm = try! Realm()
+     let realm = try! Realm()
     
     private init() {}
     

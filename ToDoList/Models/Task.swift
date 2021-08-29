@@ -6,6 +6,7 @@
 //
 
 import RealmSwift
+// модель данных связана с Realm данные на прямую не меняются //только в приложении  Realm
 
 class Task: Object {
     @objc dynamic var name = ""
