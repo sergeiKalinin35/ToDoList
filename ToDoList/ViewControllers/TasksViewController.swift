@@ -9,6 +9,13 @@ import UIKit
 
 class TasksViewController: UIViewController {
 
+    
+    
+    @IBOutlet var tableViewC: UITableView!
+    
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

@@ -75,6 +75,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="560-B3-ED1" id="FYm-h0-vRV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -132,6 +135,9 @@
                             <constraint firstItem="Cii-hP-b19" firstAttribute="leading" secondItem="IME-Va-aB3" secondAttribute="leading" id="emM-fv-VUe"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableViewC" destination="Cii-hP-b19" id="cuN-qv-Jfj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CDd-dr-Vhv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
