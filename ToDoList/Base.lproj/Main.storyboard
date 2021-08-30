@@ -17,16 +17,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="560-B3-ED1">
-                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
+                                <rect key="frame" x="0.0" y="119" width="414" height="777"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <segmentedControl key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="bMZ-mR-MC0">
-                                    <rect key="frame" x="0.0" y="120.00000034679067" width="414" height="31"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <segments>
-                                        <segment title="First"/>
-                                        <segment title="Second"/>
-                                    </segments>
-                                </segmentedControl>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="mIg-Td-gwR" detailTextLabel="KMw-v8-hha" rowHeight="71" style="IBUITableViewCellStyleValue1" id="e5k-nk-FXw">
                                         <rect key="frame" x="0.0" y="24.5" width="414" height="71"/>
@@ -51,6 +43,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="kmt-4d-nlR" kind="show" id="q3X-x9-Aao"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -58,20 +53,30 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="loj-e5-Ryx"/>
                                 </connections>
                             </tableView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="KOG-tJ-TMy">
+                                <rect key="frame" x="0.0" y="88" width="414" height="32"/>
+                                <segments>
+                                    <segment title="First"/>
+                                    <segment title="Second"/>
+                                </segments>
+                            </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="560-B3-ED1" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="5Ai-V5-8Kr"/>
-                            <constraint firstItem="560-B3-ED1" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="SL8-va-lo9"/>
+                            <constraint firstItem="KOG-tJ-TMy" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="91r-bU-xfc"/>
+                            <constraint firstItem="560-B3-ED1" firstAttribute="top" secondItem="KOG-tJ-TMy" secondAttribute="bottom" id="FBv-MT-1K5"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="KOG-tJ-TMy" secondAttribute="trailing" id="Kdv-Kx-WrC"/>
                             <constraint firstItem="560-B3-ED1" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="atI-uy-fBV"/>
+                            <constraint firstItem="KOG-tJ-TMy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="eCy-DT-oIN"/>
                             <constraint firstAttribute="bottom" secondItem="560-B3-ED1" secondAttribute="bottom" id="zKu-fs-ZYi"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="PlC-SH-NgK">
                         <barButtonItem key="rightBarButtonItem" title="Item" id="PKl-An-DMp">
                             <connections>
-                                <segue destination="kmt-4d-nlR" kind="show" id="Ldv-DT-gHk"/>
+                                <action selector="addButtonPressed:" destination="BYZ-38-t0r" id="IPy-u9-sjJ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -135,6 +140,7 @@
                             <constraint firstItem="Cii-hP-b19" firstAttribute="leading" secondItem="IME-Va-aB3" secondAttribute="leading" id="emM-fv-VUe"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="4sf-a2-tlB"/>
                     <connections>
                         <outlet property="tableViewC" destination="Cii-hP-b19" id="cuN-qv-Jfj"/>
                     </connections>

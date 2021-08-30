@@ -12,10 +12,15 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
     
   
     
+    @IBAction func addButtonPressed(_ sender: Any) {
+         showAlert()
+      }
 
-    
 
-    
+      @IBAction func sortingList(_ sender: UISegmentedControl) {
+
+    }
+
     @IBOutlet var tableView: UITableView!
     
     // данные отоброжаем в интерфейсе
@@ -76,20 +81,34 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
     
     
 }
-//    extension TaskListViewController {
-   //     private func showAlert() {
-   //         let alert = AlertController(title: "New List", message: "Please insert new value", preferredStyle: .alert)
+    extension TaskListViewController {
+        private func showAlert() {
+            let alert = AlertController(title: "New List", message: "Please insert new value", preferredStyle: .alert)
             
-    //        alert.actionWIthTaskList { newValue in
+            alert.action { newValue in
+                let taskList = TaskList()
+                taskList.name = newValue
                 
-     //           }
+                
+                StorageManager.shared.save(taskList: taskList)// сохраняет данные в базеданных
+                
+                
+                
+                //визуально отобразить добавление  новой строки и отображение  внесенный пользователем значение
+                
+                let rowIndex = IndexPath(row: self.taskLists.count - 1 , section: 0)
+                self.tableView.insertRows(at: [rowIndex], with: .automatic)
+                
+                
+                }
             
-   //         else
-  //      }
+           
+            present(alert, animated:  true)
+            
+            
+        }
         
-        
-        
-//    }
+    }
     
 
 
@@ -151,14 +170,7 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
     
 
 
-///   @IBAction func addButtonPressed(_ sender: Any) {
-//     showAlert()
-//  }
 
-
-//  @IBAction func sortingList(_ sender: UISegmentedControl) {
-
-//}
     
     
 

@@ -19,13 +19,38 @@ class StorageManager {
     // объявляем публичные методы
     
     // cохраняем список задач
-    func save(taskList: [TaskList]) {
-        try! realm.write {
+    func save(taskList: TaskList) {
+        write {
             realm.add(taskList)
-            
         }
+        
+        
+        
+     //   try! realm.write {
+     //       realm.add(taskList)
+            
+     //   }
     }
     
+    
+    private func write(_ completion: () -> Void) {
+        
+        do {
+        
+            try realm.write {
+                
+            completion()
+            
+            
+            }
+        } catch let error {
+            
+            print(error)
+        }
+        
+        
+    }
+ 
 }
 
 
