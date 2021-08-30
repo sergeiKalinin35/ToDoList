@@ -23,7 +23,7 @@ class AlertController: UIAlertController {
        addAction(saveAction)
        addAction(cancelAction)
        addTextField { textField in
-        textField.placeholder = "List Name"
+        textField.placeholder = "list add..."
             
             
         }

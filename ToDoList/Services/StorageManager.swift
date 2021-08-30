@@ -24,13 +24,24 @@ class StorageManager {
             realm.add(taskList)
         }
         
-        
-        
-     //   try! realm.write {
+       //   try! realm.write {
      //       realm.add(taskList)
             
      //   }
     }
+    
+    // метод для добавления задачи
+    func save(task: Task, in taskList: TaskList) {
+        write {
+            taskList.tasks.append(task)
+            
+        }
+        
+    }
+    
+    
+    
+    
     
     
     private func write(_ completion: () -> Void) {
