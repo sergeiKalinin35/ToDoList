@@ -34,7 +34,14 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         currentTasks = taskList.tasks.filter("isComplete = false")
         completedTasks = taskList.tasks.filter("isComplete = true")
         
+       
         
+        
+        // вызываем метод при нажатие на кнопку добавить
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonPressed))
+        
+        //добавляем кнопки в бар  navigationInavigationItem
+        navigationItem.rightBarButtonItems = [addButton, editButtonItem]
         
     }
     
@@ -67,7 +74,8 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     
-    private func addButtonPressed() {
+    @objc private func addButtonPressed() {
+        showAlert()
         
         
     }
@@ -82,10 +90,16 @@ extension TasksViewController {
     private func showAlert() {
         
         let alert = AlertController(title: "New Task", message: "What do you want to do?", preferredStyle: .alert)
-        alert.action { newValue in
+        alert.action { newValue, note in
             
+            let task = Task(value: [newValue, note])
+            
+            StorageManager.shared.save(task: task, in: self.taskList)
+            let rowIndex = IndexPath(row: self.currentTasks.count - 1, section: 0)
+            self.tableViewC.insertRows(at: [rowIndex], with: .automatic)
     }
       
+        present(alert, animated: true)
 }
 
 }
