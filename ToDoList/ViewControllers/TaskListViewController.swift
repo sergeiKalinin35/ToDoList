@@ -39,7 +39,8 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewDidLoad()
         
         taskLists = StorageManager.shared.realm.objects(TaskList.self)// идем в дата соурсе
-        
+        // Кнопка работает из коробки и позволяет вызывать меню с лева 
+        navigationItem.leftBarButtonItem = editButtonItem
         
     }
     
@@ -113,6 +114,8 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
             isDone(true)
         }
         
+        editAction.backgroundColor = .orange
+        doneAction.backgroundColor = #colorLiteral(red: 0.5843137503, green: 0.8235294223, blue: 0.4196078479, alpha: 1)
         
         
         // параметр isDone пора отпускть завершать взаимодействие с этой сторкой
