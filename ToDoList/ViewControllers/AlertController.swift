@@ -8,10 +8,17 @@
 import UIKit
 
 class AlertController: UIAlertController {
+    var doneButton = "Save"
 
-    func action(completion: @escaping (String) -> Void) {
+    func action(with taskList: TaskList?, completion: @escaping (String) -> Void) {
         
-        let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
+        if taskList != nil {
+            doneButton = "Update"
+        }
+        
+        
+        
+        let saveAction = UIAlertAction(title: doneButton, style: .default) { _ in
            guard let newValue = self.textFields?.first?.text else { return }
             guard !newValue.isEmpty else { return }
             
@@ -23,7 +30,8 @@ class AlertController: UIAlertController {
        addAction(saveAction)
        addAction(cancelAction)
        addTextField { textField in
-        textField.placeholder = "list add..."
+        textField.placeholder = "List Name"
+        textField.text = taskList?.name
             
             
         }

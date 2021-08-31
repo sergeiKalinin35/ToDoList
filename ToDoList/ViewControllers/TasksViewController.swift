@@ -43,7 +43,14 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         //добавляем кнопки в бар  navigationInavigationItem
         navigationItem.rightBarButtonItems = [addButton, editButtonItem]
         
+        
     }
+    
+ 
+    
+    
+    
+    
     
     func numberOfSections(in tableView: UITableView) -> Int {
         2

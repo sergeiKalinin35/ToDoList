@@ -43,6 +43,18 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
+    // обновление данных ячейки
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+        
+    }
+    
+    
+    
+    
+    
+    
     
     // table view data source
     
@@ -70,7 +82,45 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
         
         return cell
     }
+       
+    // удаление справа на лево
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
+        // извлекаем список tasks
+        let taskList = taskLists[indexPath.row]
+        
+        
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (_, _, _) in
+            
+            StorageManager.shared.delete(taskList: taskList)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+        }
+        
+        let editAction = UIContextualAction(style: .normal, title: "Edit") { (_, _, isDone) in
+            self.showAlert(with: taskList) {
+                tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+            isDone(true)
+        }
+           
+        
+        
+        // создаем действие done action
+        let doneAction = UIContextualAction(style: .normal, title: "Done") { (_, _, isDone) in
+            StorageManager.shared.done(taskList: taskList)
+            tableView.reloadRows(at: [indexPath], with: .automatic)
+            isDone(true)
+        }
+        
+        
+        
+        // параметр isDone пора отпускть завершать взаимодействие с этой сторкой
+        
+        return UISwipeActionsConfiguration(actions: [editAction, doneAction, deleteAction]) // d массив передаем объекты этого типа
+        
+    }
+    
     // переход на второй экран
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let indexPath = tableView.indexPathForSelectedRow else { return }
@@ -82,25 +132,39 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
     
 }
     extension TaskListViewController {
-        private func showAlert() {
+        
+        
+        
+      // принять два параметра комплишен и тасклист
+        private func showAlert(with taskList: TaskList? = nil, completion: (() -> Void)? = nil) {
             let alert = AlertController(title: "New List", message: "Please insert new value", preferredStyle: .alert)
             
-            alert.action { newValue in
-                let taskList = TaskList()
-                taskList.name = newValue
+            alert.action(with: taskList) { newValue in
                 
+                //редактировать  существующию задачу
+                if let taskList = taskList, let copmletion = completion {
+                    StorageManager.shared.edit(taskList: taskList, newValue: newValue)
+                    copmletion()
+                    
+                } else {
+                    
+                    
+                    let taskList = TaskList()
+                    taskList.name = newValue
+                    
+                    
+                    StorageManager.shared.save(taskList: taskList)// сохраняет данные в базеданных
+                    
+                    
+                    
+                    //визуально отобразить добавление  новой строки и отображение  внесенный пользователем значение
+                    
+                    let rowIndex = IndexPath(row: self.taskLists.count - 1 , section: 0)
+                    self.tableView.insertRows(at: [rowIndex], with: .automatic)
+                    
+                     }
                 
-                StorageManager.shared.save(taskList: taskList)// сохраняет данные в базеданных
-                
-                
-                
-                //визуально отобразить добавление  новой строки и отображение  внесенный пользователем значение
-                
-                let rowIndex = IndexPath(row: self.taskLists.count - 1 , section: 0)
-                self.tableView.insertRows(at: [rowIndex], with: .automatic)
-                
-                
-                }
+        }
             
            
             present(alert, animated:  true)
