@@ -39,8 +39,8 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewDidLoad()
         
         taskLists = StorageManager.shared.realm.objects(TaskList.self)// идем в дата соурсе
-        // Кнопка работает из коробки и позволяет вызывать меню с лева 
-        navigationItem.leftBarButtonItem = editButtonItem
+        // Кнопка работает из коробки и позволяет вызывать меню с лева
+        self.navigationItem.leftBarButtonItem = editButtonItem
         
     }
     
@@ -140,7 +140,11 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
         
       // принять два параметра комплишен и тасклист
         private func showAlert(with taskList: TaskList? = nil, completion: (() -> Void)? = nil) {
-            let alert = AlertController(title: "New List", message: "Please insert new value", preferredStyle: .alert)
+            
+            let title = taskList != nil ? "Edit List" : "New List"
+            
+            
+            let alert = AlertController(title: title, message: "Please insert new value", preferredStyle: .alert)
             
             alert.action(with: taskList) { newValue in
                 

@@ -94,16 +94,32 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
 extension TasksViewController {
     
-    private func showAlert() {
+    private func showAlert(with task: Task? = nil, completion: (() -> Void)? = nil ) {
         
-        let alert = AlertController(title: "New Task", message: "What do you want to do?", preferredStyle: .alert)
-        alert.action { newValue, note in
+        let title = task != nil ? "Edit Task" : "New Task"
+        
+        let alert = AlertController(title: title, message: "What do you want to do?", preferredStyle: .alert)
+        alert.action(with: task) { newValue, note in
             
-            let task = Task(value: [newValue, note])
+            if let task = task, let completion = completion {
+                
+                StorageManager.shared.edit(task: task, name: newValue, note: note)
+                completion()
+                
+                
+            } else {
+                
+                let task = Task(value: [newValue, note])
+                StorageManager.shared.save(task: task, in: self.taskList)
+                let rowIndex = IndexPath(row: self.currentTasks.count - 1, section: 0)
+                self.tableViewC.insertRows(at: [rowIndex], with: .automatic)
+                
+            }
             
-            StorageManager.shared.save(task: task, in: self.taskList)
-            let rowIndex = IndexPath(row: self.currentTasks.count - 1, section: 0)
-            self.tableViewC.insertRows(at: [rowIndex], with: .automatic)
+            
+            
+            
+      
     }
       
         present(alert, animated: true)
