@@ -17,8 +17,13 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
       }
 
 
-      @IBAction func sortingList(_ sender: UISegmentedControl) {
-
+      @IBAction func sortingList(_ sender: UISegmentedControl) {// сортировка данных
+        
+        taskLists = sender.selectedSegmentIndex == 0
+            ? taskLists.sorted(byKeyPath: "name")
+            : taskLists.sorted(byKeyPath: "date")
+        
+        tableView.reloadData()
     }
 
     @IBOutlet var tableView: UITableView!
@@ -120,7 +125,7 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
         
         // параметр isDone пора отпускть завершать взаимодействие с этой сторкой
         
-        return UISwipeActionsConfiguration(actions: [editAction, doneAction, deleteAction]) // d массив передаем объекты этого типа
+        return UISwipeActionsConfiguration(actions: [doneAction, editAction, deleteAction]) // d массив передаем объекты этого типа
         
     }
     

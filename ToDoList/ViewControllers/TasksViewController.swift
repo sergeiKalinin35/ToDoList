@@ -102,9 +102,9 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
            
         
-        
+        let title = indexPath.section == 0 ? "Done" : "Undone"
         // создаем действие done action
-        let doneAction = UIContextualAction(style: .normal, title: "Done") { [self] (_, _, isDone) in
+        let doneAction = UIContextualAction(style: .normal, title: title) { [self] (_, _, isDone) in
        
             StorageManager.shared.done(task: task)
             
@@ -129,7 +129,7 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         // параметр isDone пора отпускть завершать взаимодействие с этой сторкой
         
-        return UISwipeActionsConfiguration(actions: [editAction, doneAction, deleteAction]) // d массив передаем объекты этого типа
+        return UISwipeActionsConfiguration(actions: [doneAction, editAction, deleteAction]) // d массив передаем объекты этого типа
         
     }
     
