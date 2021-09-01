@@ -75,14 +75,23 @@ class TaskListViewController: UIViewController, UITableViewDelegate, UITableView
         
         let taskList = taskLists[indexPath.row]// извлекаем элемент по текущей строки, объект нашей модели
         
-        var content = cell.defaultContentConfiguration()
-        content.text = taskList.name
+        cell.configure(with: taskList) // смотреть расширение ячейки 
+        
+        
+        
+        
+        
+        
+        
+        
+    //    var content = cell.defaultContentConfiguration()
+    //    content.text = taskList.name
         
         // отоброжаем количество задач из realm
-        content.secondaryText = "\(taskList.tasks.count)"
+    //    content.secondaryText = "\(taskList.tasks.count)"
         
         // передаем контент
-        cell.contentConfiguration = content
+   //     cell.contentConfiguration = content
         
         
         
