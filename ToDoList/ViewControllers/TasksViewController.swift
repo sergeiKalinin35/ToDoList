@@ -80,6 +80,76 @@ class TasksViewController: UIViewController, UITableViewDelegate, UITableViewDat
       return cell
     }
     
+    // удаление справа на лево
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        // извлекаем список tasks
+        let task = indexPath.section == 0 ? currentTasks[indexPath.row] : completedTasks[indexPath.row]
+        
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (_, _, _) in
+            StorageManager.shared.delete(task: task)
+           tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+        }
+        
+        let editAction = UIContextualAction(style: .normal, title: "Edit") { (_, _, isDone) in
+            self.showAlert(with: task) {
+               tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+            
+            
+            isDone(true)
+        }
+           
+        
+        
+        // создаем действие done action
+        let doneAction = UIContextualAction(style: .normal, title: "Done") { [self] (_, _, isDone) in
+       
+            StorageManager.shared.done(task: task)
+            
+            
+            
+         // перемищение строк анимированно
+            
+            let indexPathForCurrentTask = IndexPath(row: self.currentTasks.count - 1, section: 0)// последняя строка с первой секции
+            
+            let indexPathCompletedTask = IndexPath(row: self.completedTasks.count - 1, section: 1)// последняя строка из второй секции
+            
+            let destinationIndexRow = indexPath.section == 0 ? indexPathCompletedTask : indexPathForCurrentTask// индекс места назначения
+            
+            tableView.moveRow(at: indexPath, to: destinationIndexRow)
+            
+            isDone(true)
+        }
+        
+        editAction.backgroundColor = .orange
+        doneAction.backgroundColor = #colorLiteral(red: 0.5843137503, green: 0.8235294223, blue: 0.4196078479, alpha: 1)
+        
+        
+        // параметр isDone пора отпускть завершать взаимодействие с этой сторкой
+        
+        return UISwipeActionsConfiguration(actions: [editAction, doneAction, deleteAction]) // d массив передаем объекты этого типа
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     @objc private func addButtonPressed() {
         showAlert()
